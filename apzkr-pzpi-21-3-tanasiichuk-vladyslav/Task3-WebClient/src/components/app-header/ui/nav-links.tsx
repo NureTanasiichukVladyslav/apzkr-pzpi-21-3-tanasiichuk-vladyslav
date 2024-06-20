@@ -3,7 +3,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Button, Container, Link, Stack } from "@mui/material";
 import { fetchClient } from "@/utils/fetch";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { LanguageChanger } from "./language-changer";
 import { NotificationsMenu } from "./notifications-menu";
@@ -16,8 +16,11 @@ interface Props {
 
 export const NavLinks = ({ user, notifications }: Props) => {
   const router = useRouter();
+  const path = usePathname();
 
   const { t } = useTranslation();
+
+  const isUser = !path.includes("admin");
 
   const handleLogout = async () => {
     try {
@@ -45,9 +48,11 @@ export const NavLinks = ({ user, notifications }: Props) => {
         <Stack direction="row" alignItems="center" gap={4}>
           {user ? (
             <>
-              <Link href="/animals/create" underline="hover">
-                <Typography fontWeight="400">{t("addAnimal")}</Typography>
-              </Link>
+              {isUser && (
+                <Link href="/animals/create" underline="hover">
+                  <Typography fontWeight="400">{t("addAnimal")}</Typography>
+                </Link>
+              )}
               <Link href="/animal-species/create" underline="hover">
                 <Typography fontWeight="400">
                   {t("addAnimalSpecies")}

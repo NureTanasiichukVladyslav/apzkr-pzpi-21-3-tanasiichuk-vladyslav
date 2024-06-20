@@ -1,7 +1,7 @@
 "use client";
 import { fetchClient } from "@/utils/fetch";
 import { revalidateTag } from "@/utils/revalidate-tag";
-import { Button, Stack, TextField, Typography, Link } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,7 @@ export default function Page() {
         id: number;
         token: string;
         login: string;
-      }>("auth/login", {
+      }>("auth/signup", {
         login,
         password,
       });
@@ -30,14 +30,13 @@ export default function Page() {
         window.localStorage.setItem("access_token", response?.token);
       }
       revalidateTag("user");
-      if (login === "admin") {
-        router.push("admin");
-      } else {
-        router.push("/");
-      }
+      // if (login === "admin") {
+      //   router.push("admin");
+      // } else {
+      //   router.push("/");
+      // }
     } catch (err) {
-      console.log(err);
-      setErrorMessage(t("loginFailed"));
+      setErrorMessage(t("signUpFailed"));
     }
   };
 
@@ -45,7 +44,7 @@ export default function Page() {
     <Stack gap={4}>
       <h3></h3>
       <Typography variant="h5" align="center">
-        {t("signIn")}
+        {t("signUp")}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Stack gap={2}>
@@ -73,11 +72,8 @@ export default function Page() {
             error={!!errorMessage}
           />
           <Button type="submit" fullWidth variant="contained" color="primary">
-            {t("signIn")}
+            {t("signUp")}
           </Button>
-          <Link href="/sign-up" variant="body2">
-            {t("dontHaveAccount")}
-          </Link>
         </Stack>
         {errorMessage && ( // Conditionally render error message
           <Typography variant="body2" color="error">

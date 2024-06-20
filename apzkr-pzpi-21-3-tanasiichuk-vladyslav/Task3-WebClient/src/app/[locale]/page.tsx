@@ -27,6 +27,8 @@ export default async function Home({
     return null;
   }
 
+  console.log(animals);
+
   return (
     <Container maxWidth="xl">
       <Stack gap={4}>

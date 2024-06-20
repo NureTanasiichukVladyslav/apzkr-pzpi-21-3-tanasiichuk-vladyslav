@@ -26,7 +26,7 @@ export class AuthService {
         firstName: signUpUserDto.firstName,
         lastName: signUpUserDto.lastName,
         password,
-        roleId: roles.user.id,
+        roleId: roles.admin.id,
       },
     });
 
